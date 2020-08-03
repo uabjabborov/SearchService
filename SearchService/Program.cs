@@ -14,7 +14,7 @@ namespace SearchService
             searchEngines.Add(new SearchEngines.Bing());
 
             var storage = new Storages.DbStorage<Databases.SqliteDB>();
-            var service = new SearchService(storage, searchEngines);
+            var service = new Service(storage, searchEngines);
 
             var results =  service.SearchOnlineAsync("hello world");
 
