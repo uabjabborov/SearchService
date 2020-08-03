@@ -6,7 +6,7 @@ namespace SearchService
 {
     public interface StorageInterface
     {
-        public Task<bool> storeAsync(List<SearchResult> results);
+        public Task storeAsync(List<SearchResult> results);
 
         public Task<List<SearchResult>> searchAsync(string keyword);
     }

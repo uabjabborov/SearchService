@@ -13,22 +13,12 @@ namespace SearchService.Storages
             throw new NotImplementedException();
         }
 
-        public async Task<bool> storeAsync(List<SearchResult> results)
+        public async Task storeAsync(List<SearchResult> results)
         {
-            try
+            using (T db = new T())
             {
-                using (T db = new T())
-                {
-                    db.Add(new StoredResult());
-                    var res = await db.SaveChangesAsync();
-
-                    return res > 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-                return false;
+                db.Add(new StoredResult());
+                await db.SaveChangesAsync();
             }
         }
     }

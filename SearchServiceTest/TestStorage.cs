@@ -7,18 +7,17 @@ namespace SearchServiceTest
 {
     public class TestStorage : StorageInterface
     {
-        public TestStorage()
-        {
-        }
+        private readonly List<SearchResult> storedResults = new List<SearchResult>();
 
         public Task<List<SearchResult>> searchAsync(string keyword)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> storeAsync(List<SearchResult> results)
+        public Task storeAsync(List<SearchResult> results)
         {
-            throw new NotImplementedException();
+            storedResults.AddRange(results);
+            return Task.CompletedTask;
         }
     }
 }
