@@ -29,7 +29,7 @@ namespace SearchService.Storages
             using (T db = new T())
             {
                 db.Add(new StoredResult());
-                await db.SaveChangesAsync();
+                _ = await db.SaveChangesAsync();
             }
         }
     }
