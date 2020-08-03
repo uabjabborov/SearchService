@@ -10,7 +10,7 @@ namespace SearchServiceTest
     {
         private readonly List<SearchResult> storedResults = new List<SearchResult>();
 
-        public Task<List<SearchResult>> searchAsync(string keyword)
+        public Task<List<SearchResult>> SearchAsync(string keyword)
         {
             var result = from storedResult in storedResults
                          where
@@ -22,7 +22,7 @@ namespace SearchServiceTest
             return (Task<List<SearchResult>>)result;
         }
 
-        public Task storeAsync(List<SearchResult> results)
+        public Task StoreAsync(List<SearchResult> results)
         {
             storedResults.AddRange(results);
             return Task.CompletedTask;

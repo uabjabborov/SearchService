@@ -10,7 +10,7 @@ namespace SearchService.Storages
 {
     public class DbStorage<T> : StorageInterface where T : SqliteDB, System.IDisposable, new()
     {
-        public async Task<List<SearchResult>> searchAsync(string keyword)
+        public async Task<List<SearchResult>> SearchAsync(string keyword)
         {
             using(T db = new T())
             {
@@ -24,7 +24,7 @@ namespace SearchService.Storages
             }
         }
 
-        public async Task storeAsync(List<SearchResult> results)
+        public async Task StoreAsync(List<SearchResult> results)
         {
             using (T db = new T())
             {

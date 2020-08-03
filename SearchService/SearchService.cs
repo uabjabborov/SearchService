@@ -52,7 +52,7 @@ namespace SearchService
             // store successful results
             if (searchResult != null)
             {
-                await storedResults.storeAsync(searchResult);
+                await storedResults.StoreAsync(searchResult);
             }
 
             return searchResult;
@@ -60,7 +60,7 @@ namespace SearchService
 
         public async Task<List<SearchResult>> SearchOfflineAsync(string keyword)
         {
-            return await storedResults.searchAsync(keyword);
+            return await storedResults.SearchAsync(keyword);
         }
     }
 }
