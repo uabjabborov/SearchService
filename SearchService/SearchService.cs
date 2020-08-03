@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SearchService
@@ -7,9 +8,9 @@ namespace SearchService
     public class SearchService
     {
         private readonly List<SearchEngineInterface> searchEngines;
-        private readonly StoredResultsInterface storedResults;
+        private readonly StorageInterface storedResults;
 
-        public SearchService(StoredResultsInterface storedResults, List<SearchEngineInterface> searchEngines)
+        public SearchService(StorageInterface storedResults, List<SearchEngineInterface> searchEngines)
         {
             this.searchEngines = searchEngines;
             this.storedResults = storedResults;
@@ -18,22 +19,28 @@ namespace SearchService
         public async Task<List<SearchResult>> SearchOnlineAsync(string keyword)
         {
             // search from all engines
+            CancellationTokenSource cts = new CancellationTokenSource();
+
             var results = new List<Task<List<SearchResult>>>();
             foreach (var searchEngine in searchEngines)
             {
-                var searchTask = searchEngine.SearchAsync(keyword);
+                var searchTask = searchEngine.SearchAsync(keyword, cts.Token);
                 results.Add(searchTask);
             }
 
             // wait for the first successful result
-            List<SearchResult> searchResults = null;
+            List<SearchResult> searchResult = null;
             while (results.Count > 0)
             {
                 var firstCompleted = await Task.WhenAny(results);
 
                 if (firstCompleted.IsCompletedSuccessfully && firstCompleted.Result != null)
                 {
-                    searchResults = firstCompleted.Result;
+                    searchResult = firstCompleted.Result;
+
+                    // cancel all other requests
+                    cts.Cancel();
+                    Task.WaitAll(results.ToArray());
                     results.Clear();
                 }
                 else
@@ -43,12 +50,12 @@ namespace SearchService
             }
 
             // store successful results
-            if (searchResults != null)
+            if (searchResult != null)
             {
-                await storedResults.storeAsync(searchResults);
+                await storedResults.storeAsync(searchResult);
             }
 
-            return searchResults;
+            return searchResult;
         }
 
         public async Task<List<SearchResult>> SearchOfflineAsync(string keyword)
