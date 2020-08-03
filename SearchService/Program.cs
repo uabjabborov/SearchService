@@ -9,13 +9,12 @@ namespace SearchService
         {
             List<SearchEngineInterface> searchEngines = new List<SearchEngineInterface>();
 
-            searchEngines.Add(new Engines.Google());
-            searchEngines.Add(new Engines.Yandex());
-            searchEngines.Add(new Engines.Bing());
+            searchEngines.Add(new SearchEngines.Google());
+            searchEngines.Add(new SearchEngines.Yandex());
+            searchEngines.Add(new SearchEngines.Bing());
 
-            var sqliteDB = new Databases.SqliteDB();
-
-            var service = new SearchService(sqliteDB, searchEngines);
+            var storage = new Storages.DbStorage<Databases.SqliteDB>();
+            var service = new SearchService(storage, searchEngines);
 
             var results =  service.SearchOnlineAsync("hello world");
 
@@ -27,8 +26,13 @@ namespace SearchService
             {
                 Console.WriteLine("empty response!!!");
             }
-
-            Console.WriteLine("hello world");
+            else
+            {
+                foreach (var r in res)
+                {
+                    Console.WriteLine(r.ToString());
+                }
+            }
         }
     }
 }
