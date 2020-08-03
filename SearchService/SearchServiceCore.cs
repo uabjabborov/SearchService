@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace SearchService
 {
-    public class SearchService
+    public class SearchServiceCore
     {
         private readonly List<SearchEngineInterface> searchEngines;
         private readonly StorageInterface storedResults;
 
-        public SearchService(StorageInterface storedResults, List<SearchEngineInterface> searchEngines)
+        public SearchServiceCore(StorageInterface storedResults, List<SearchEngineInterface> searchEngines)
         {
             this.searchEngines = searchEngines;
             this.storedResults = storedResults;
