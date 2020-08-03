@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace SearchService.Engines
+namespace SearchService.SearchEngines
 {
     public class Yandex : SearchEngineInterface
     {
@@ -10,7 +11,7 @@ namespace SearchService.Engines
         {
         }
 
-        public async Task<List<SearchResult>> SearchAsync(string keyword)
+        public async Task<List<SearchResult>> SearchAsync(string keyword, CancellationToken ct)
         {
             throw new NotImplementedException();
         }
