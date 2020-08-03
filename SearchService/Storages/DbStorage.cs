@@ -28,7 +28,10 @@ namespace SearchService.Storages
         {
             using (T db = new T())
             {
-                db.Add(new StoredResult());
+                foreach (var res in results)
+                {
+                    db.Add(new StoredResult { Link = res.Link, Title = res.Title, Text = res.Text });
+                }
                 _ = await db.SaveChangesAsync();
             }
         }
