@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace SearchService.Storages
 {
-    public class DbStorage<T> : StorageInterface where T : SqliteDB, System.IDisposable, new()
+    public class DbStorage<T> : StorageInterface where T : CommonDb, System.IDisposable, new()
     {
         public async Task<List<SearchResult>> SearchAsync(string keyword)
         {
