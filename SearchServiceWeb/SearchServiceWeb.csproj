@@ -9,9 +9,13 @@
     <ProjectReference Include="..\SearchService\SearchService.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\SearchServiceTest\SearchServiceTest.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\" />
-    <Folder Include="Views\Search\" />
+    <Folder Include="Views\OnlineSearch\" />
+    <Folder Include="Views\OfflineSearch\" />
   </ItemGroup>
 </Project>
