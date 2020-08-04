@@ -10,6 +10,16 @@ namespace SearchService.Storages
 {
     public class DbStorage<T> : StorageInterface where T : CommonDb, System.IDisposable, new()
     {
+
+        public DbStorage()
+        {
+            using (T db = new T())
+            {
+                db.Database.EnsureCreated();
+                db.SaveChanges();
+            }
+        }
+
         public async Task<List<SearchResult>> SearchAsync(string keyword)
         {
             using(T db = new T())
