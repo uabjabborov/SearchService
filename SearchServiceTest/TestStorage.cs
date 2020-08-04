@@ -12,14 +12,11 @@ namespace SearchServiceTest
 
         public Task<List<SearchResult>> SearchAsync(string keyword)
         {
-            var result = from storedResult in storedResults
-                         where
-                            storedResult.Text.ToLower().Contains(keyword.ToLower()) ||
-                            storedResult.Title.ToLower().Contains(keyword.ToLower()) ||
-                            storedResult.Link.ToLower().Contains(keyword.ToLower())
-                         select storedResult;
+            var result = storedResults.Where(r => r.Link.ToLower().Contains(keyword.ToLower()) || 
+                                                  r.Title.ToLower().Contains(keyword.ToLower()) || 
+                                                  r.Text.ToLower().Contains(keyword.ToLower())).ToList();
 
-            return (Task<List<SearchResult>>)result;
+            return result.Count > 0 ? Task.FromResult(result) : Task.FromResult<List<SearchResult>>(null);
         }
 
         public Task StoreAsync(List<SearchResult> results)

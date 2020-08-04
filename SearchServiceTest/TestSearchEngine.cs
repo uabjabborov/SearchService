@@ -21,16 +21,13 @@ namespace SearchServiceTest
 
         public async Task<List<SearchResult>> SearchAsync(string keyword, CancellationToken ct)
         {
-            await Task.Delay(TimeSpan.FromMilliseconds(searchDelay));
+            await Task.Delay(TimeSpan.FromMilliseconds(searchDelay), ct);
 
-            var result = from searchResult in possibleResults
-                         where
-                            searchResult.Text.ToLower().Contains(keyword.ToLower()) ||
-                            searchResult.Title.ToLower().Contains(keyword.ToLower()) ||
-                            searchResult.Link.ToLower().Contains(keyword.ToLower())
-                         select searchResult;
+            var result = possibleResults.Where(r => r.Link.ToLower().Contains(keyword.ToLower()) ||
+                                                    r.Title.ToLower().Contains(keyword.ToLower()) ||
+                                                    r.Text.ToLower().Contains(keyword.ToLower())).ToList();
 
-            return (List<SearchResult>)result;
+            return result;
         }
     }
 }
