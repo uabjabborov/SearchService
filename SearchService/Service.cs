@@ -34,13 +34,12 @@ namespace SearchService
             {
                 var firstCompleted = await Task.WhenAny(results);
 
-                if (firstCompleted.IsCompletedSuccessfully && firstCompleted.Result != null)
+                if (firstCompleted.IsCompletedSuccessfully && firstCompleted.Result != null && firstCompleted.Result.Count > 0)
                 {
                     searchResult = firstCompleted.Result;
 
                     // cancel all other requests
                     cts.Cancel();
-                    Task.WaitAll(results.ToArray());
                     results.Clear();
                 }
                 else
