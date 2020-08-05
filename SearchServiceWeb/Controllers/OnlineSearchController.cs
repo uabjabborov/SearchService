@@ -18,7 +18,7 @@ namespace SearchServiceWeb.Controllers
             searchEngines.Add(new SearchService.SearchEngines.Yandex());
             searchEngines.Add(new SearchService.SearchEngines.Bing());
 
-            var storage = new SearchService.Storages.DbStorage<SearchService.Databases.SqliteDb>();
+            var storage = new SearchService.Storages.DbStorage<SearchService.Databases.MsSqlDb>();
 
             return new Service(storage, searchEngines);
         }
