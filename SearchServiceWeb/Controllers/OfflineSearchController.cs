@@ -12,7 +12,7 @@ namespace SearchServiceWeb.Controllers
         private static Service GetService()
         {
             List<SearchEngineInterface> searchEngines = new List<SearchEngineInterface>();
-            var storage = new SearchService.Storages.DbStorage<SearchService.Databases.SqliteDB>();
+            var storage = new SearchService.Storages.DbStorage<SearchService.Databases.SqliteDb>();
 
             return new Service(storage, searchEngines);
         }
